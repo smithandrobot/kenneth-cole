@@ -12,7 +12,7 @@ package com.smithandrobot.kennethcole.model
 		public function AppDataVO()
 		{ 
 			_data = null;
-			_objectDrawers.push("kenneth_cole_space_panel.swf")
+			_objectDrawers.push("kenneth_cole_space_panel.swf");
 		}
 		
 		
