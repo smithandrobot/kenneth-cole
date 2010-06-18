@@ -150,8 +150,8 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		{
 			var obj = e.target.canvasObject;
 			var p = CoordinateTools.localToLocal(e.target.scope, this);
-
 			var s = addChild(obj);
+			
 			s.x = p.x;
 			s.y = p.y;
 		}

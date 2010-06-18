@@ -55,9 +55,8 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		{
 			_scope.buttonMode = true;
 			_scope.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			_scope.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			_scope.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
+		
 		
 		private function onMouseDown(e:MouseEvent) : void
 		{
@@ -65,8 +64,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			_canvasObject.addChild(getBMP());
 			dispatchEvent(new Event("onPaletteObjectCreated", true));
 		}
-		
-		
+				
 		private function onMouseUp(e:MouseEvent) : void
 		{
 
@@ -75,7 +73,6 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		
 		private function getBMP() 
 		{
-			// Shape
 			var ref = _scope.getChildAt(0);
 			var bmd:BitmapData;
 			var m = new Matrix();
