@@ -4,7 +4,7 @@ package com.smithandrobot.kennethcole.model
 
     import org.puremvc.as3.interfaces.IProxy;
     import org.puremvc.as3.patterns.proxy.Proxy;
-	
+	import com.smithandrobot.kennethcole.model.AppDataVO;
 	
     public class ApplicationDataProxy extends Proxy implements IProxy
     {
@@ -18,8 +18,9 @@ package com.smithandrobot.kennethcole.model
 		
 		private function onModelReady():void
 		{
-			trace("sending note from model")
-			sendNotification( ApplicationFacade.INITIALIZE_SITE );
+			trace("sending note from model");
+			var vo = new AppDataVO();
+			sendNotification( ApplicationFacade.INITIALIZE_SITE, vo);
 		}
     }
 }

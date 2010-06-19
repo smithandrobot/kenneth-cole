@@ -1,6 +1,7 @@
 package com.senocular.display 
 {
 	
+	
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	
@@ -36,7 +37,6 @@ package com.senocular.display
 		if (autoAdd && target.parent) {
 			target.parent.addChild(duplicate);
 		}
-		trace("duplicate.x: "+duplicate.x)
 		return duplicate;
 	}
 }

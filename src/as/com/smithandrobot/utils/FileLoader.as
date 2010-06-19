@@ -39,7 +39,7 @@ package com.smithandrobot.utils
 		private var _loader 	: Loader;
 		private var _files		: Array;
 		private var _cacheFiles	: Boolean = false;
-		
+		private var _class 		: *;
 		
 		public function FileLoader()
 		{
@@ -81,6 +81,10 @@ package com.smithandrobot.utils
 		//  PUBLIC METHODS
 		//--------------------------------------
 		
+		public function set classType(c:Class) : void
+		{
+			_class = c;
+		}
 		//--------------------------------------
 		//  EVENT HANDLERS
 		//--------------------------------------
@@ -109,7 +113,8 @@ package com.smithandrobot.utils
 		
 		private function onCompleteHandler(loadEvent:Event)
 		{
-				var c = loadEvent.currentTarget.content;
+				trace("class: "+_class)
+				var c = (_class) ? loadEvent.currentTarget.content as _class : loadEvent.currentTarget.content;
 				_loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onProgressHandler);
 				if(_cacheFiles) _files.push({file:_file, content: c});
 				dispatchEvent(new FileLoaderEvent(FileLoaderEvent.FILE_LOADED, {content:c}));

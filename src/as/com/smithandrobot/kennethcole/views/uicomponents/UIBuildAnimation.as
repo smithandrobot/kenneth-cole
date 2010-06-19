@@ -4,6 +4,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 	import flash.display.Sprite;
 	import com.greensock.TweenNano;
 	import com.greensock.easing.*;
+	import flash.events.Event;
 	
 	public class UIBuildAnimation extends Sprite 
 	{
@@ -67,7 +68,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			TweenNano.to(cb, .25, {delay:delay+.6, alpha:1, x: orgX});
 
 			pBtn.scaleX = pBtn.scaleY = .1;
-			TweenNano.to(pBtn, .5, {delay:delay+.75, alpha:.5, scaleX:1, scaleY:1, ease:Back.easeOut});
+			TweenNano.to(pBtn, .5, {delay:delay+.75, alpha:.5, scaleX:1, scaleY:1, ease:Back.easeOut, onComplete:onBuildDone});
 			
 			orgX = ai.x;
 			ai.x += 20;
@@ -77,6 +78,12 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			di.x += 10;
 			TweenNano.to(di, .25, {delay:delay+.7, alpha:1, x: orgX});
 			
+		}
+		
+		private function onBuildDone()
+		{
+			trace("buidl done called")
+			dispatchEvent(new Event("onUIAnimatedIn"));
 		}
 		
 	}

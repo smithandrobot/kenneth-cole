@@ -20,39 +20,29 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private var _canvas	: MovieClip = null;
 		private var _canvasObject;
 		
+		
 		public function PaletteObject(scope)
 		{
 			_scope = scope;
 			initBehaviors();
 		}
-		
-		//--------------------------------------
-		//  GETTER/SETTERS
-		//--------------------------------------
+
+
 		public function get canvasObject() : MovieClip
 		{
 			return _canvasObject;
 		}
 		
+		
 		public function get scope() : MovieClip
 		{
 			return _scope;
 		}
-		
-		
-		//--------------------------------------
-		//  PUBLIC METHODS
-		//--------------------------------------
-	
-		//--------------------------------------
-		//  EVENT HANDLERS
-		//--------------------------------------
-		
-		//--------------------------------------
-		//  PRIVATE & PROTECTED INSTANCE METHODS
-		//--------------------------------------
+
+
 		private function initBehaviors()
 		{
+			if(!_scope) return;
 			_scope.buttonMode = true;
 			_scope.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		}
@@ -63,11 +53,6 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			_canvasObject = DuplicateDisplayObject(_scope);
 			_canvasObject.addChild(getBMP());
 			dispatchEvent(new Event("onPaletteObjectCreated", true));
-		}
-				
-		private function onMouseUp(e:MouseEvent) : void
-		{
-
 		}
 		
 		

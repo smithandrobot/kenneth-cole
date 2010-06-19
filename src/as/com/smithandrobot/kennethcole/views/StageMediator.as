@@ -13,9 +13,9 @@ package com.smithandrobot.kennethcole.views
  */
     import flash.display.Stage;
     import flash.display.Sprite;
-    import flash.events.Event;
-	
-	// import com.greensock.TweenMax;
+    import flash.events.*;
+
+	import com.greensock.TweenNano;
 	
     import org.puremvc.as3.interfaces.*;
     import org.puremvc.as3.patterns.mediator.Mediator;
@@ -30,15 +30,23 @@ package com.smithandrobot.kennethcole.views
 
         public static const NAME:String 	= "StageMediator";
 		private var _scope 					: Sprite;
+		private var _loader					: UILoaders;
+		private var _objectsFile			: String;
+		private var _framesFile				: String;
 		
 		public function StageMediator( sprite )
 		{
             super( NAME, sprite );
-			//addEventListener("selectBlankBKG", )
-			stage.addEventListener("onUIAnimatedIn", onStageIn)
+			_loader = new UILoaders();
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, onStageClick);
+			stage.addEventListener(KeyboardEvent.KEY_UP,keyUpListener);
 		}
 
 		
+		private function keyUpListener(e)
+		{
+			trace("stge heard jey")
+		}
 		//--------------------------------------
 		//  PUBLIC METHODS
 		//--------------------------------------
@@ -56,7 +64,7 @@ package com.smithandrobot.kennethcole.views
             switch ( note.getName() ) 
             {
                 case ApplicationFacade.INITIALIZE_SITE:     	
-					initializeSite();
+					initializeSite(note.getBody());
                   	break;
                 default:
                   	break;
@@ -76,29 +84,68 @@ package com.smithandrobot.kennethcole.views
             return viewComponent as Sprite;
         }
 		
-		//--------------------------------------
-		//  EVENT HANDLERS
-		//--------------------------------------
 		
-		
-		
-		//--------------------------------------
-		//  PRIVATE & PROTECTED INSTANCE METHODS
-		//--------------------------------------
-		
-		
-        private function initializeSite():void
+        private function initializeSite(o:Object):void
         {
-			trace("site start up scope: "+stage);
+			_objectsFile = o.getFile("objectPalette");
+			_framesFile	= o.getFile("framePalette");
+			
 			var u = new UIBuildAnimation(stage);
+			u.addEventListener("onUIAnimatedIn", onStageIn, false, 0, true)
 			u.start();
-			/*facade.registerMediator( mapMediator );*/
+			
+			// printing
+			var pSprite = stage.getChildByName("printBtn");
+			var pController = new PrintBtn(pSprite)
+			var p = new PrintMediator(pController);	
+			facade.registerMediator( p );
+			
+			//canvas
+			var canvas = stage.getChildByName("canvas");
+			var cm		= new CanvasMediator( canvas );
+			facade.registerMediator( cm );
         }
 
 
 		private function onStageIn(e:Event)
 		{
-			
+			_loader.addEventListener("onObjectsPaletteLoaded", onObjectsPaletteLoaded);
+			_loader.addEventListener("onFramesLoaded", onFramesLoaded);
+			_loader.loadFrames(stage, _framesFile);
+			_loader.loadObjects(stage, _objectsFile);
+		}
+		
+		
+		private function onObjectsPaletteLoaded(e:Event) : void
+		{
+			var canvas = stage.getChildByName("canvas");
+			var palette = e.target.objectPalette;
+			palette.x = 724;
+			palette.y = 119;
+			palette.canvas = canvas;
+			stage.addChild(palette);
+			var om = new ObjectPaletteMediator(palette);
+			bringCanvasToTop();
+		}
+		
+		
+		private function onFramesLoaded(e:Event) : void
+		{
+			trace("stage mediator onFramesLoaded");
+		}
+		
+		private function bringCanvasToTop()
+		{
+			var canvas = stage.getChildByName("canvas");
+			var p	   = stage.getChildByName("printBtn")
+			stage.setChildIndex(canvas, stage.numChildren-1);
+			stage.setChildIndex(p, stage.numChildren-1);
+		}
+		
+		private function onStageClick(e:MouseEvent) : void
+		{
+			trace("stage clicked");
+			sendNotification(ApplicationFacade.STAGE_CLICKED, {x:e.stageX,y:e.stageY});
 		}
 
 	}

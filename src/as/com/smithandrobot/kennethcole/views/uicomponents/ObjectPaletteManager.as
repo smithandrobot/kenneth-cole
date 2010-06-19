@@ -21,6 +21,9 @@ package com.smithandrobot.kennethcole.views.uicomponents
 	
 	import com.smithandrobot.kennethcole.views.uicomponents.ObjectPaletteNavItem;
 	import com.smithandrobot.kennethcole.views.uicomponents.PaletteObject;
+	import com.smithandrobot.kennethcole.views.uicomponents.CanvasObject;
+	import com.smithandrobot.kennethcole.views.uicomponents.Canvas;
+	
 	import com.smithandrobot.utils.CoordinateTools;
 	
 	public class ObjectPaletteManager extends Sprite 
@@ -31,6 +34,9 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private var _selectedID		: int;
 		private var _nav			: Array = new Array();
 		private var _palettes		: MovieClip;
+		private var _canvas			: Canvas;
+		private var _printLayer		: Sprite;
+		
 		private static var START	: int = -13;
 		private static var PWIDTH	: int = 280;
 		private static var PADDING	: int = 20;
@@ -45,7 +51,10 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		//--------------------------------------
 		//  GETTER/SETTERS
 		//--------------------------------------
-		
+		public function set canvas(c:Canvas) : void
+		{
+			_canvas = c;
+		}
 		//--------------------------------------
 		//  PUBLIC METHODS
 		//--------------------------------------
@@ -56,6 +65,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		
 		private function onAdded(e:Event = null) : void
 		{
+			trace("added to display list ObjectPaletteManager")
 			setUpNav();
 			_palettes = getChildByName("paletteContainer") as MovieClip;
 			setUpMasking();
@@ -119,6 +129,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		{
 			var m = new PaletteContainerMask();
 			m.x = START;
+			addChild(m)
 			_palettes.mask = m;
 		}
 		
@@ -136,7 +147,6 @@ package com.smithandrobot.kennethcole.views.uicomponents
 				j = 0;
 				container = _palettes.getChildAt(i);
 				total = container.numChildren-1;
-				trace("container: "+container.name)
 				for(j; j<=total; j++)
 				{
 					po = new PaletteObject(container.getChildAt(j) as MovieClip);
@@ -148,12 +158,15 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		
 		private function onPaletteObjectCreated(e:Event)
 		{
-			var obj = e.target.canvasObject;
-			var p = CoordinateTools.localToLocal(e.target.scope, this);
-			var s = addChild(obj);
+			var obj = e.target.canvasObject as MovieClip;
+			var layer = (_canvas) ? _canvas : this;
+			var p = CoordinateTools.localToLocal(e.target.scope, layer);
+			var s = layer.addChild(obj);
 			
 			s.x = p.x;
 			s.y = p.y;
+			var co = new CanvasObject(s);
+			co.canvas = _canvas;
 		}
 	}
 

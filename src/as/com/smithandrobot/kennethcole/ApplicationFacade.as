@@ -9,9 +9,12 @@ package com.smithandrobot.kennethcole
 	public class ApplicationFacade extends Facade implements IFacade
 	{
 
-        public static const STARTUP:String  			= "startup";
-        public static const INITIALIZE_SITE:String  	= "initializeApplication";
-
+        public static const STARTUP : String  				= "startup";
+        public static const INITIALIZE_SITE : String  		= "initializeApplication";
+		public static const CANVAS_OBJECT_ADDED : String  	= "canvasObjectAdded";
+		public static const CANVAS_OBJECT_REMOVED : String	= "canvasObjectRemoved";
+		public static const STAGE_CLICKED : String 			= "stageClicked";
+		
         public static function getInstance() : ApplicationFacade 
         {
             if ( instance == null ) instance = new ApplicationFacade();
