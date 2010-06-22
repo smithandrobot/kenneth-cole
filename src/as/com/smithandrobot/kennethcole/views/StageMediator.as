@@ -94,16 +94,16 @@ package com.smithandrobot.kennethcole.views
 			u.addEventListener("onUIAnimatedIn", onStageIn, false, 0, true)
 			u.start();
 			
-			// printing
-			var pSprite = stage.getChildByName("printBtn");
-			var pController = new PrintBtn(pSprite)
-			var p = new PrintMediator(pController);	
-			facade.registerMediator( p );
-			
 			//canvas
 			var canvas = stage.getChildByName("canvas");
 			var cm		= new CanvasMediator( canvas );
 			facade.registerMediator( cm );
+			
+			// printing
+			var pSprite = stage.getChildByName("printBtn");
+			var pController = new PrintBtn(pSprite)
+			var p = new PrintMediator(pController);
+			facade.registerMediator( p );
         }
 
 
@@ -131,7 +131,14 @@ package com.smithandrobot.kennethcole.views
 		
 		private function onFramesLoaded(e:Event) : void
 		{
-			trace("stage mediator onFramesLoaded");
+			var canvas = stage.getChildByName("canvas");
+			var frames = e.target.framesPanel;
+			frames.x = 9;
+			frames.y = 304;
+			frames.canvas = canvas;
+			stage.addChild(frames);
+			var fm = new FramesPanelMediator(frames);
+			bringCanvasToTop();
 		}
 		
 		private function bringCanvasToTop()

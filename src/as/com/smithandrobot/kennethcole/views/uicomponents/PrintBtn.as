@@ -32,9 +32,11 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		{
 			if(b)
 			{
+				_scope.buttonMode = true;
 				_scope.addEventListener(MouseEvent.CLICK, onPrint);
 				TweenNano.to(_scope, .5, {alpha:1, overwrite:true});
 			}else{
+				_scope.buttonMode = false;
 				_scope.removeEventListener(MouseEvent.CLICK, onPrint);
 				TweenNano.to(_scope, .5, {alpha:.5, overwrite:true});	
 			}

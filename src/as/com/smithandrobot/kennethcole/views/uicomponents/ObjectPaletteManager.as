@@ -1,16 +1,6 @@
-
-
 package com.smithandrobot.kennethcole.views.uicomponents 
 {
 
-/**
- *	Class description.
- *
- *	@langversion ActionScript 3.0
- *	@playerversion Flash 9.0
- *	@author David Ford
- *	@since  17.06.2010
- */
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -71,6 +61,19 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			setUpMasking();
 			init();
 			initObjects();
+			UIBuild();
+		}
+		
+		
+		private function UIBuild() : void
+		{
+			if(_palettes) TweenNano.from(_palettes, .5,{delay:.5, alpha:0});
+			if(_navSpace)
+			{
+				TweenNano.from(getChildByName("navSpace"), .5, {y:"5",alpha:0});
+				TweenNano.from(getChildByName("navCity"), .5, {y:"5", delay:.15, alpha:0});
+				TweenNano.from(getChildByName("navCharacters"), .5, {y:"5", delay:.3, alpha:0});
+			}
 		}
 		
 		

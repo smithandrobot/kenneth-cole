@@ -32,6 +32,7 @@ package com.smithandrobot.kennethcole.views
 		{
 			super(NAME, viewComponent);
 			canvas.addEventListener("onObjectAddedToCanvas", onObjectAdded);
+			canvas.addEventListener("onObjectRemovedFromCanvas", onObjectRemoved);
 		}
 
 		/**
@@ -43,13 +44,18 @@ package com.smithandrobot.kennethcole.views
 		 * 
 		 * @param notiication  Notification object
 		 * @return void
-		 */ 
+		 */
+		
 		override public function handleNotification(notification:INotification):void 
 		{
 			switch (notification.getName())
 			{
 				case ApplicationFacade.STAGE_CLICKED : 
 					handleStageClick(notification.getBody());
+					break;
+					
+				case ApplicationFacade.PRINT : 
+					canvas.print();
 					break;
 				
 				default:
@@ -65,13 +71,24 @@ package com.smithandrobot.kennethcole.views
 		 */
 		override public function listNotificationInterests():Array 
 		{
-			return [ ApplicationFacade.STAGE_CLICKED ];
+			return [ 
+				ApplicationFacade.STAGE_CLICKED,
+				ApplicationFacade.PRINT 
+			];
 		}
 
 		private function onObjectAdded(e:Event)
 		{
 			var count = canvas.objectCount;
 			sendNotification(ApplicationFacade.CANVAS_OBJECT_ADDED, count);
+		}
+		
+		private function onObjectRemoved(e:Event)
+		{
+
+			var count = canvas.objectCount;
+			trace("object removed count: "+count)
+			sendNotification(ApplicationFacade.CANVAS_OBJECT_REMOVED, count);
 		}
 		
 		

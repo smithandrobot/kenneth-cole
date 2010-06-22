@@ -1,17 +1,20 @@
+/**
+ * FramesPanelMediator.as
+ *
+ *
+ *
+ * @author   David Ford <>
+ * @version  1.0.0
+ */
 package com.smithandrobot.kennethcole.views 
 {
 	import org.puremvc.as3.interfaces.IMediator;
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
-
-	import flash.events.Event;
 	
-	import com.smithandrobot.kennethcole.ApplicationFacade;
-	import com.smithandrobot.kennethcole.views.uicomponents.PrintBtn;
-	
-	public class PrintMediator extends Mediator implements IMediator
+	public class FramesPanelMediator extends Mediator implements IMediator
 	{
-		public static const NAME:String = "PrintMediator";
+		public static const NAME:String = "FramesPanelMediator";
 		
 		/**
 		 * Constructor function
@@ -19,10 +22,9 @@ package com.smithandrobot.kennethcole.views
 		 * @param viewComponent  Display view mediated by this class
 		 * @return void
 		 */
-		public function PrintMediator(viewComponent:Object):void 
+		public function FramesPanelMediator(viewComponent:Object):void 
 		{
 			super(NAME, viewComponent);
-			printBtn.addEventListener("onPrint", onPrintBtnClicked)
 		}
 
 		/**
@@ -39,15 +41,14 @@ package com.smithandrobot.kennethcole.views
 		{
 			switch (notification.getName())
 			{
-				case ApplicationFacade.CANVAS_OBJECT_ADDED:
-					handleCanvasChange(notification.getBody());
-					break;
-				case ApplicationFacade.CANVAS_OBJECT_REMOVED:
-					handleCanvasChange(notification.getBody());
-					break;
 				default:
 					break;
 			}
+		}
+		
+		protected function get frames() : *
+		{
+			return viewComponent;
 		}
 		
 		/**
@@ -58,26 +59,7 @@ package com.smithandrobot.kennethcole.views
 		 */
 		override public function listNotificationInterests():Array 
 		{
-			return [
-			ApplicationFacade.CANVAS_OBJECT_ADDED,
-			ApplicationFacade.CANVAS_OBJECT_REMOVED
-			];
-		}
-		
-		private function onPrintBtnClicked(e:Event)
-		{
-			sendNotification(ApplicationFacade.PRINT);
-		}
-		
-		protected function get printBtn() : PrintBtn
-		{
-			return viewComponent as PrintBtn;
-		}
-		
-		private function handleCanvasChange(c:Object) : void
-		{
-			if(c > 0) printBtn.enabled = true;
-			if(c <= 0) printBtn.enabled = false;
+			return [];
 		}
 
 	}

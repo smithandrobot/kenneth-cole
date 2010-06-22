@@ -51,7 +51,6 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			TweenNano.to(_objectLoaderSprite, .5, {alpha:.5, y:294});
 			_objectLoader = new FileLoader();
 			_objectLoader.addEventListener(FileLoaderEvent.FILE_LOADED, onObjectsLoaded);
-			/*_objectLoader.classType = ObjectPaletteManager;*/
 			_objectLoader.file = file;
 			return _objectLoaderSprite;
 		}
@@ -78,8 +77,9 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		
 		private function onFramesLoaded(e:FileLoaderEvent) : void
 		{
-			//_framesPanel = e.data.content;
-			dispatchEvent(new Event("onObjectsFramesLoaded"));
+			_framesPanel = e.data.content;
+			TweenNano.to(_frameLoaderSprite, .25, {alpha:0, overwrite:true});
+			dispatchEvent(new Event("onFramesLoaded"));
 		}
 		
 	}

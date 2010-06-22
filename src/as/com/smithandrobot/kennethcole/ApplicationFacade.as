@@ -14,6 +14,7 @@ package com.smithandrobot.kennethcole
 		public static const CANVAS_OBJECT_ADDED : String  	= "canvasObjectAdded";
 		public static const CANVAS_OBJECT_REMOVED : String	= "canvasObjectRemoved";
 		public static const STAGE_CLICKED : String 			= "stageClicked";
+		public static const PRINT : String					= "onPrint";
 		
         public static function getInstance() : ApplicationFacade 
         {
