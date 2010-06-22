@@ -37,6 +37,7 @@ package com.smithandrobot.kennethcole.views
 		public function StageMediator( sprite )
 		{
             super( NAME, sprite );
+			var tile = stage.addChildAt(new BKGTile(stage.stage.stageWidth, stage.stage.stageHeight), 0);
 			_loader = new UILoaders();
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onStageClick);
 			stage.addEventListener(KeyboardEvent.KEY_UP,keyUpListener);

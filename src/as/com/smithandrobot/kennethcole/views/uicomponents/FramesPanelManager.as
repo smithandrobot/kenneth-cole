@@ -69,7 +69,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			_selected = e.target;
 			_bmpData = e.target.bmpData;
 			setSelected();
-			if(_bmpData) _canvas.bkgLayerBMP.bitmapData = _bmpData;
+			if(_bmpData && _canvas) _canvas.bkgLayerBMP.bitmapData = _bmpData;
 		}
 		
 		
@@ -77,10 +77,13 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		{
 			var i = 0;
 			var total = _frames.length -1;
-			
 			for(i; i<= total; i++)
 			{
-				if(_frames[i] == _selected) _frames[i].selected = true;
+				if(_frames[i] == _selected) 
+				{
+								trace("setting selected")
+								_frames[i].selected = true;
+				}
 				if(_frames[i] != _selected) _frames[i].selected = false;
 			}
 		}
@@ -120,7 +123,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 				fClass.id = frame.name;	
 				_frames.push(fClass);
 				d = masterDelay+delay*i;
-				f = (i==total) ? null : onUIin
+				f = (i==total) ? onUIin: null;
 				TweenNano.from(frame, .25, {delay:d, alpha:0, scaleX:.1, scaleY:.1, ease:Back.easeOut, onComplete:f});
 			}
 		}
@@ -128,6 +131,8 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private function onUIin()
 		{
 			setSelected();
+			_bmpData = _selected.bmpData;
+			if(_bmpData && _canvas) _canvas.bkgLayerBMP.bitmapData = _bmpData;
 		}
 	}
 }

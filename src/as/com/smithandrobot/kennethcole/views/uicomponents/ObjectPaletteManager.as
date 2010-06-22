@@ -7,7 +7,8 @@ package com.smithandrobot.kennethcole.views.uicomponents
 	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	
-	import com.greensock.TweenNano;
+	import com.greensock.TweenLite;
+	import com.greensock.easing.*;
 	
 	import com.smithandrobot.kennethcole.views.uicomponents.ObjectPaletteNavItem;
 	import com.smithandrobot.kennethcole.views.uicomponents.PaletteObject;
@@ -67,12 +68,33 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		
 		private function UIBuild() : void
 		{
-			if(_palettes) TweenNano.from(_palettes, .5,{delay:.5, alpha:0});
+			var obj;
+			var delay = .08;
+			var d;
+			var container;
+			var total;
+			var j = 0;
+			
+			if(_palettes) TweenLite.from(_palettes, .5,{delay:.5, alpha:0});
 			if(_navSpace)
 			{
-				TweenNano.from(getChildByName("navSpace"), .5, {y:"5",alpha:0});
-				TweenNano.from(getChildByName("navCity"), .5, {y:"5", delay:.15, alpha:0});
-				TweenNano.from(getChildByName("navCharacters"), .5, {y:"5", delay:.3, alpha:0});
+				TweenLite.from(getChildByName("navSpace"), .5, {y:"5",alpha:0});
+				TweenLite.from(getChildByName("navCity"), .5, {y:"5", delay:.15, alpha:0});
+				TweenLite.from(getChildByName("navCharacters"), .5, {y:"5", delay:.3, alpha:0});
+			}
+			
+			if(_palettes)
+			{
+				container = _palettes.getChildAt(0);
+				total = container.numChildren-1;
+				for(j; j<=total; j++)
+				{
+					d = j*delay+.5;
+					obj = container.getChildAt(j) as MovieClip;
+					trace("j: "+j+" delay: "+d)
+					// easeParams - 1.70158
+					TweenLite.from(obj, .15, {alpha:0, delay:d, scaleX:.01, scaleY:.01, ease:Back.easeOut, easeParams:1.5});
+				}
 			}
 		}
 		
@@ -125,7 +147,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 				if(_nav[i] != n) _nav[i].selected = false
 			}
 			
-			TweenNano.to(_palettes, .5, {x:destX, overwrite:true});
+			TweenLite.to(_palettes, .5, {x:destX, overwrite:true});
 		}
 		
 		private function setUpMasking() : void

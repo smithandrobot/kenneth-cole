@@ -12,6 +12,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 	import flash.printing.PrintJobOptions;
 	
 	import flash.geom.Rectangle;
+	import flash.geom.Matrix;
 	
 	import com.smithandrobot.kennethcole.transform.KennethColeTransformTool;
 	import com.senocular.display.TransformTool;
@@ -74,25 +75,50 @@ package com.smithandrobot.kennethcole.views.uicomponents
             var pj:PrintJob = new PrintJob();
 			var po = new PrintJobOptions();
 			po.printAsBitmap = true;
+			var sheet = parent.addChild(new Sprite());
+			sheet.visible = false;
+			
             if(pj.start()) {                
-
-                try {
-                    pj.addPage(this, new Rectangle(0,0, this.width, this.height), po, 0);
-                }
-                catch(e:Error) {
-                    // do nothing
-                }
-
-				pj.send();
-            }
+				var bmp = drawBMP(pj);
+				sheet.addChild(bmp);
+				var w = bmp.width;
+				var h = bmp.height;
+				trace("wi: "+w+" h: "+h);
+				try 
+				{
+					pj.addPage(sheet, new Rectangle(0,0, w, h), po, 0);
+                 }
+                  catch(e:Error) {
+                      // do nothing
+                  }
+  				pj.send();
+              }
+			parent.removeChild(sheet);
         }
 		//--------------------------------------
 		//  Event Handlers
 		//--------------------------------------
+		private function drawBMP(pj)
+		{	
+			var scaleW = _printLayer.width/pj.pageWidth;
+			var scaleH = _printLayer.height/pj.pageHeight;
+			var scale = (scaleH<scaleW) ? scaleH-.015 : scaleW-.015;
+			var m = new Matrix();
+			m.scale(scale,scale);
+			
+			var msk = _printLayer.mask;
+			_printLayer.mask = null;
+			var bmd = new BitmapData(_printLayer.width*2, _printLayer.height*2, true, 0xaa000000);
+			bmd.draw(_printLayer,m);
+			var bmp = new Bitmap(bmd);
+			bmp.smoothing = true;
+			_printLayer.mask = msk;
+			return bmp;
+		}
+		
 		
 		private function onObjectAdded(e:Event)
 		{
-			trace("something is added");
 			++_objectCount;
 			dispatchEvent(new Event("onObjectAddedToCanvas"));
 		}
@@ -166,7 +192,6 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			if(_transformTool.target)
 			{
 				var bkg = getChildByName("bkg");
-				trace("hit test: "+bkg.hitTestPoint(e.stageX, e.stageY))
 				if(!bkg.hitTestPoint(e.stageX, e.stageY))
 				{
 					_transformTool.target.parent.removeChild(_transformTool.target);
