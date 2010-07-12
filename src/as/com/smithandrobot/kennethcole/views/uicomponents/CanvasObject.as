@@ -5,8 +5,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Matrix;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
+	import flash.display.*;
 	
 	import com.greensock.TweenNano;
 	
@@ -22,6 +21,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private var _canvas 	: * = null;
 		private var _orgPt 		: Point;
 		private var _overTarget : Boolean = false;
+		private var _canvasInstructions : MovieClip;
 		
 		public function CanvasObject(scope)
 		{
@@ -35,6 +35,12 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		}
 		
 		
+		override public function toString() : String
+		{
+			return "Canvas Object";
+		}
+		
+		
 		public function set canvas(c:*) : void
 		{
 			 if(c) _canvas = c;
@@ -43,7 +49,8 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private function initBehaviors()
 		{
 			_scope.buttonMode = true;
-			_scope.addEventListener(MouseEvent.MOUSE_UP, onMouseUp)
+			_scope.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			_scope.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			_scope.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove)
 		}
 		
@@ -53,6 +60,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			if(!_scope) return;
 			_scope.buttonMode = false;
 			_scope.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			_scope.stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			_scope.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove)
 		}
 		
@@ -106,6 +114,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			canvasObject.x = p.x;
 			canvasObject.y = p.y;
 			canvasObject.scaleX = canvasObject.scaleY = 1;
+			canvasObject.alpha = 1;
 			canvasObject.addChild(getBMP());
 			_canvas.objLayer.addChild(canvasObject)
 			remove();

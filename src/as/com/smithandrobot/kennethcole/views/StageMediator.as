@@ -33,6 +33,7 @@ package com.smithandrobot.kennethcole.views
 		private var _loader					: UILoaders;
 		private var _objectsFile			: String;
 		private var _framesFile				: String;
+		private var _mouseDown				: Boolean;
 		
 		public function StageMediator( sprite )
 		{
@@ -40,13 +41,7 @@ package com.smithandrobot.kennethcole.views
 			var tile = stage.addChildAt(new BKGTile(stage.stage.stageWidth, stage.stage.stageHeight), 0);
 			_loader = new UILoaders();
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onStageClick);
-			stage.addEventListener(KeyboardEvent.KEY_UP,keyUpListener);
-		}
-
-		
-		private function keyUpListener(e)
-		{
-			trace("stge heard jey")
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		}
 		//--------------------------------------
 		//  PUBLIC METHODS
@@ -145,15 +140,23 @@ package com.smithandrobot.kennethcole.views
 		private function bringCanvasToTop()
 		{
 			var canvas = stage.getChildByName("canvas");
-			var p	   = stage.getChildByName("printBtn")
+			var p	   = stage.getChildByName("printBtn");
+			var a	   = stage.getChildByName("ad");
+			
 			stage.setChildIndex(canvas, stage.numChildren-1);
 			stage.setChildIndex(p, stage.numChildren-1);
+			stage.setChildIndex(a, stage.numChildren-1);
 		}
 		
 		private function onStageClick(e:MouseEvent) : void
 		{
-			trace("stage clicked");
+			_mouseDown = (e.type==MouseEvent.MOUSE_DOWN) ? true : false;
 			sendNotification(ApplicationFacade.STAGE_CLICKED, {x:e.stageX,y:e.stageY});
+		}
+		
+		private function onMouseMove(e:MouseEvent) : void
+		{
+			if(_mouseDown) sendNotification(ApplicationFacade.MOUSE_MOVE, {x:e.stageX,y:e.stageY});
 		}
 
 	}

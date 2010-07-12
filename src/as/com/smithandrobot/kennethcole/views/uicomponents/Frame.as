@@ -67,7 +67,6 @@ package com.smithandrobot.kennethcole.views.uicomponents
 
 				if(a[i].id == _id) 
 				{
-					trace("found bmp data match")
 					_bmpData = a[i].data;
 				}
 			}

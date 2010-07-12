@@ -213,7 +213,11 @@ package com.senocular.display {
 			// initiate move interaction if applies after controls updated
 			if (_moveNewTargets && _moveEnabled && _moveControl) {
 				_currentControl = _moveControl;
-				_currentControl.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN));
+				setupInteraction();
+				/* David Ford - commented this line out so that moving could
+				   could be enabled on click.
+				*/
+				//_currentControl.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN));
 			}
 		}
 		
@@ -1306,7 +1310,7 @@ class TransformToolInternalControl extends TransformToolControl {
 	}
 	
 	private function controlMove(event:Event):void {
-		if (interactionMethod && _transformTool.currentControl == this) {
+		if (hasOwnProperty("interactionMethod") && _transformTool.currentControl == this) {
 			interactionMethod();
 		}
 	}

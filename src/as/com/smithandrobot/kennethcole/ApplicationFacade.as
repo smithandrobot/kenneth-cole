@@ -15,6 +15,8 @@ package com.smithandrobot.kennethcole
 		public static const CANVAS_OBJECT_REMOVED : String	= "canvasObjectRemoved";
 		public static const STAGE_CLICKED : String 			= "stageClicked";
 		public static const PRINT : String					= "onPrint";
+		public static const MOUSE_MOVE : String				= "onMouseMove";
+		
 		
         public static function getInstance() : ApplicationFacade 
         {

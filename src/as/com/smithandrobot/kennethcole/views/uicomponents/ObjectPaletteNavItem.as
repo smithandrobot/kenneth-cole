@@ -51,6 +51,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			return _id;
 		}
 		
+		/*public function numericID () */
 		public function set selected(b:Boolean) : void
 		{
 			_selected = b;

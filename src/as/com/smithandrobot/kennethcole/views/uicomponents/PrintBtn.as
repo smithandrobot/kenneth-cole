@@ -3,6 +3,8 @@ package com.smithandrobot.kennethcole.views.uicomponents
 	import flash.events.*;
 	import flash.display.MovieClip;
 	
+	import com.disney.tracking.AdServe;
+	
 	import com.greensock.TweenNano;
 	
 	public class PrintBtn extends EventDispatcher 
@@ -10,11 +12,13 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		
 		private var _scope 		: MovieClip;
 		private var _enabled	: Boolean = false;
+		private var _adServe	: AdServe;
 		
 		public function PrintBtn(scope = null)
 		{
 			super();
 			_scope = scope;
+			_adServe = new AdServe("flashAd.html", true, true);
 		}
 		
 		public function set enabled(b:Boolean) : void
@@ -45,6 +49,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private function onPrint(e:MouseEvent)
 		{
 			dispatchEvent(new Event("onPrint"));
+			_adServe.clickAd(4);
 		}
 		
 	}

@@ -43,7 +43,11 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			var ai 		= _scope.getChildByName("addItems");
 			var di 		= _scope.getChildByName("dragItems");
 			var pBtn	= _scope.getChildByName("printBtn");
-
+			var nav		= _scope.getChildByName("nav");
+			var navHome = nav.getChildByName("nav_home");
+			var navSweeps = nav.getChildByName("nav_sweeps");
+			var navShop = nav.getChildByName("nav_shop");
+			
 			orgY = logo.y;
 			logo.y += 10;
 			TweenNano.to(logo, .25, {alpha:1, y:orgY});
@@ -58,6 +62,13 @@ package com.smithandrobot.kennethcole.views.uicomponents
 			
 			//canvas.scaleX = pBtn.scaleY = .1;
 			TweenNano.to(canvas, .5, {delay:delay+.3, alpha:1});
+			
+			//navHome.alpha = navShop.alpha = navSweeps.alpha = 0;
+			
+			TweenNano.to(nav, .25, {delay: delay+.3, alpha:1});
+			TweenNano.from(navHome, .25, {delay: delay+.3, alpha:0, scaleX:.1, scaleY: .1, ease:Back.easeOut});
+			TweenNano.from(navSweeps, .25, {delay: delay+.5, alpha:0, scaleX:.1, scaleY: .1, ease:Back.easeOut});
+			TweenNano.from(navShop, .25, {delay: delay+.7, alpha:0, scaleX:.1, scaleY: .1, ease:Back.easeOut});
 			
 			orgX = pb.x;
 			pb.x -= 20;

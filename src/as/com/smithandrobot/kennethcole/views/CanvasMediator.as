@@ -57,6 +57,10 @@ package com.smithandrobot.kennethcole.views
 				case ApplicationFacade.PRINT : 
 					canvas.print();
 					break;
+					
+				case ApplicationFacade.MOUSE_MOVE : 
+					canvas.checkSelected(notification.getBody());
+					break;
 				
 				default:
 					break;
@@ -72,6 +76,7 @@ package com.smithandrobot.kennethcole.views
 		override public function listNotificationInterests():Array 
 		{
 			return [ 
+				ApplicationFacade.MOUSE_MOVE,
 				ApplicationFacade.STAGE_CLICKED,
 				ApplicationFacade.PRINT 
 			];

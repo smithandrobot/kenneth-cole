@@ -113,7 +113,6 @@ package com.smithandrobot.utils
 		
 		private function onCompleteHandler(loadEvent:Event)
 		{
-				trace("class: "+_class)
 				var c = (_class) ? loadEvent.currentTarget.content as _class : loadEvent.currentTarget.content;
 				_loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS, onProgressHandler);
 				if(_cacheFiles) _files.push({file:_file, content: c});

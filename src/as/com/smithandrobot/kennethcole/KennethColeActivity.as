@@ -29,7 +29,7 @@ package com.smithandrobot.kennethcole
 			for(i; i<= total; i++)
 			{
 				var c = getChildAt(i)
-				if(c.hasOwnProperty("alpha")) c.alpha = 0;
+				if(c.hasOwnProperty("alpha") && c.name != "ad") c.alpha = 0;
 			}
 		}
 		
