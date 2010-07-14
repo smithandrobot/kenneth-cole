@@ -60,9 +60,9 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		{
 			var id : int;
 			
-			if(e.target.name == "nav_home") id = 1;
-			if(e.target.name == "nav_sweeps") id = 2;
-			if(e.target.name == "nav_shop") id = 3;
+			if(e.target.name == "nav_home") id = 13;
+			if(e.target.name == "nav_sweeps") id = 14;
+			if(e.target.name == "nav_shop") id = 15;
 			
 			_adServe.clickAd(id);
 		}

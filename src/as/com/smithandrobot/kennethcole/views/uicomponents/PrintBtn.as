@@ -49,7 +49,7 @@ package com.smithandrobot.kennethcole.views.uicomponents
 		private function onPrint(e:MouseEvent)
 		{
 			dispatchEvent(new Event("onPrint"));
-			_adServe.clickAd(4);
+			_adServe.clickAd(16);
 		}
 		
 	}
